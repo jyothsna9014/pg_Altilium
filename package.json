@@ -1,0 +1,32 @@
+{
+  "name": "pg-altilium",
+  "version": "0.0.0",
+  "private": false,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "api": "^1.0.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "http-errors": "^1.6.3",
+    "morgan": "^1.9.1",
+    "mqtt": "^3.0.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "pug": "^2.0.4",
+    "sequelize": "^5.21.2",
+    "sequelize-cli": "^5.5.1",
+    "view-engine": "^1.1.1"
+  },
+  "main": "app.js",
+  "bin": {
+    "pg-altilium": "www.js"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
