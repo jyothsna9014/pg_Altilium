@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) =>  {
     LuminariesOpMode: DataTypes.STRING,
     powerMode: DataTypes.STRING,
     FaultData: DataTypes.STRING,
-    Brightnesslevel: DataTypes.STRING
+    Brightnesslevel: DataTypes.STRING,
+    occupancy:DataTypes.STRING
   }, {});
   logfixtures.associate = function(models) {
     // associations can be defined here

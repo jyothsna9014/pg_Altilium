@@ -4,7 +4,7 @@ const getopmodeON = (req, res, next) => {
 
 
 
-    logfixtures.findAll({
+    logfixtures.findOne({
 
         attributes: [[models.sequelize.fn("COUNT", models.sequelize.col("LuminariesOpMode")), "opmodeCountON"]
 
@@ -13,7 +13,7 @@ const getopmodeON = (req, res, next) => {
                 
             
     }).then(opmodeCountON => {
-        console.log("succes", opmodeCountON)
+        console.log("succes-----", opmodeCountON)
         res.send(opmodeCountON);
     }).catch(err => {
         console.log("fail", err)
