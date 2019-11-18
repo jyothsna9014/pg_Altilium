@@ -15,6 +15,9 @@ var mqtt = require('./mqtt/mqtt');
 
 var app = express();
 const cron = require("node-cron");
+const cronjob1=require('./server/cronJobs/CronForDashboard')
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

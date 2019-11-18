@@ -1,36 +1,25 @@
-// var mqtt = require('mqtt');
-// const cron = require("node-cron");
-// var Topic1 = 'dashboard';
-// var Broker_URL = 'mqtt://192.168.33.118:1883';
-// var client = mqtt.connect('mqtt://192.168.33.118:1883')
-// var options = {
-//   clientId: '780740aa-b6a0-4f3b-9724-378a5ff5914f',
-//   port: 1883,
+var mqttclient = require('../mqtt/mqtt')
+var { getdashboard, ONGridPromise, ONBatteryPromise, opmodeOFFPromise, opmodeONPromise, LitalityNodesPromise, BatteryStatusPromise } = require('../server/services/dashboardService')
+//var mqtt_publish = require('./mqtt')
 
-//   keepalive: 60
-// };
-// client.on("connect",function(){	
-//   console.log("connected");
-// })
-// client.subscribe(Topic1)
-// var message="http://localhost:8080/api/v1/dashboard";
 
-// //publish every 5 secs
-// var timer_id=setInterval(function(){publish(Topic1,message);},5000);
+const dash = () => {
+   return new Promise((resolve, reject) => {
+        Promise.all([ONGridPromise, ONBatteryPromise, opmodeOFFPromise, opmodeONPromise, LitalityNodesPromise, BatteryStatusPromise]).then((result) => {
+            //console.log('on battery issss ==== ',result[1])
+            const resultObj = JSON.parse(JSON.stringify(result))
+            //console.log(JSON.stringify(result[0][0]))
+            let response = {};
 
-// //publish function
-// function publish(topic,msg){
-//   console.log("publishing",msg);
-// if (client.connected == true){
-//   client.publish(topic,msg);
-// }
-// }
+            for (let i = 0; i < resultObj.length; i++) {
 
-// cron.schedule("5 * * * *", publish() {
-//   console.log("---------------------");
-//   console.log("Running Cron Job");
-//   fs.unlink("./error.log", err => {
-//     if (err) throw err;
-//     console.log("Error file succesfully deleted");
-//   });
-// });
+                response[Object.keys(resultObj[i])[0]] = Object.values(resultObj[i])[0]
+            }
+            console.log(response);
+            resolve(response);
+        });
+    });
+}
+
+
+module.exports = { dash}

@@ -2,8 +2,9 @@ var mqtt = require('mqtt');
 var Topic = 'fixture_status';
 var Broker_URL = 'mqtt://192.168.33.118:1883';
 var pg_insert = require('../pg/pgInsert');
-var Topic1='dashboard'
-var dashboard=require('../server/controllers/dashBoardController.js')
+var Topic1 = 'dashboard'
+
+
 
 
 
@@ -22,14 +23,19 @@ mqttclient.on('reconnect', mqtt_reconnect);
 mqttclient.on('error', mqtt_error);
 mqttclient.on('message', mqtt_messsageReceived);
 mqttclient.on('close', mqtt_close);
-//mqttclient.on('publish',mqtt_publish);
-
+mqttclient.on('message', mqtt_publish);
+function mqtt_publish(Topic1,message){
+    console.log("subscribed to"+Topic1)
+    console.log("message publishing is"+message)
+ 
+}
 
 function mqtt_connect() {
 
     console.log("Connecting MQTT");
-
+    // const cronjob1=require('./server/cronJobs/CronForDashboard')
     mqttclient.subscribe(Topic, mqtt_subscribe);
+    
 };
 
 
@@ -68,7 +74,7 @@ function mqtt_messsageReceived(Topic, message) {
     var jsonStr = JSON.parse(message.toString());
     const message_str = Buffer.from(jsonStr.data);
     console.log(message_str);
-    if (message_str.length=0) {
+    if (message_str.length = 0) {
         console.log("Invalid payload");
     }
     else {
@@ -76,33 +82,18 @@ function mqtt_messsageReceived(Topic, message) {
     }
 };
 
+
+
+
+
+
 function mqtt_close() {
     //console.log("Close MQTT");
 };
 
-// function mqtt_connect() {
-
-//     console.log("Connecting MQTT");
-
-//     mqttclient.subscribe(Topic1, mqtt_subscribe);
-// };
-
-// function mqtt_subscribe(err, dashboard) {
-//     console.log("Subscribed to " + Topic1);
-//     if (err) {
-
-//         // result.status(300).send();
-//         // return done();
-//         console.log(err);
-//     }
-// };
-// function mqtt_publish () {
-//     console.log('success', dashboard)
-//     client.publish('success',dashboard )
-//   }
 
 
 
-module.exports = {};
 
+module.exports = { mqttclient,mqtt_publish};
 
